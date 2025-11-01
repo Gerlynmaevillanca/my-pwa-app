@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, Film, Users, Play, Star } from "lucide-react";
+import { ArrowLeft, Calendar, Film, Users, Play, Star, Heart } from "lucide-react";
 import MovieList from "../components/MovieList";
 
-const API_KEY = "3ae4907c";
+const API_KEY = "daac218b";
 
 function MovieDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [related, setRelated] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -21,6 +22,14 @@ function MovieDetails() {
     };
     fetchMovie();
   }, [id]);
+
+  // Check if movie is in favorites
+  useEffect(() => {
+    if (!movie) return;
+    const stored = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isInFavorites = stored.some((m) => m.imdbID === movie.imdbID);
+    setIsFavorite(isInFavorites);
+  }, [movie]);
 
   // Fetch related movies based on genre
   useEffect(() => {
@@ -42,6 +51,24 @@ function MovieDetails() {
     };
     fetchRelated();
   }, [movie, id]);
+
+  const toggleFavorite = () => {
+    const stored = JSON.parse(localStorage.getItem("favorites")) || [];
+    
+    if (isFavorite) {
+      // Remove from favorites
+      const updated = stored.filter((m) => m.imdbID !== movie.imdbID);
+      localStorage.setItem("favorites", JSON.stringify(updated));
+      setIsFavorite(false);
+      alert("Removed from Favorites 💔");
+    } else {
+      // Add to favorites
+      stored.push(movie);
+      localStorage.setItem("favorites", JSON.stringify(stored));
+      setIsFavorite(true);
+      alert("Added to Favorites ❤️");
+    }
+  };
 
   if (!movie) {
     return (
@@ -181,23 +208,23 @@ function MovieDetails() {
                   <span>Watch Trailer on YouTube</span>
                 </button>
 
-                {/* Favorites Button */}
+                {/* Favorites Button - Toggle between Add/Remove */}
                 <button
-                  onClick={() => {
-                    const stored =
-                      JSON.parse(localStorage.getItem("favorites")) || [];
-                    if (!stored.find((m) => m.imdbID === movie.imdbID)) {
-                      stored.push(movie);
-                      localStorage.setItem(
-                        "favorites",
-                        JSON.stringify(stored)
-                      );
-                      alert("Added to Favorites ❤️");
-                    }
-                  }}
-                  className="w-full px-6 py-4 bg-white text-pink-600 border border-pink-300 rounded-2xl font-semibold hover:bg-pink-50 transition-all"
+                  onClick={toggleFavorite}
+                  className={`w-full px-6 py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-3 ${
+                    isFavorite
+                      ? "bg-red-500 text-white hover:bg-red-600 shadow-lg hover:shadow-xl"
+                      : "bg-white text-pink-600 border border-pink-300 hover:bg-pink-50"
+                  }`}
                 >
-                  ❤️ Add to Favorites
+                  <Heart
+                    size={20}
+                    fill={isFavorite ? "white" : "none"}
+                    className={isFavorite ? "text-white" : "text-pink-600"}
+                  />
+                  <span>
+                    {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                  </span>
                 </button>
               </div>
             </div>

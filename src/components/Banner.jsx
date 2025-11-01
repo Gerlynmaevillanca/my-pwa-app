@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const API_KEY = "3ae4907c";
+const API_KEY = "daac218b";
 
 function Banner() {
   const sliderRef = useRef(null);

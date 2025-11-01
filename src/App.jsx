@@ -9,7 +9,7 @@ import Favorites from "./pages/Favorites";
 import Filters from "./components/Filters";
 import Banner from "./components/Banner";
 
-const API_KEY = "3ae4907c";
+const API_KEY = "daac218b";
 
 function App() {
   const [movies, setMovies] = useState([]);
