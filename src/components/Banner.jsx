@@ -45,7 +45,6 @@ function Banner() {
         }
       }
 
-      // Duplicate posters for seamless infinite scroll
       const doubled = [...posters, ...posters];
       setMovieImages(doubled);
     };
@@ -70,7 +69,7 @@ function Banner() {
 
     const start = setTimeout(() => {
       animationFrame = requestAnimationFrame(scroll);
-    }, 800); // small delay to ensure layout ready
+    }, 800);
 
     return () => {
       cancelAnimationFrame(animationFrame);
@@ -108,7 +107,6 @@ function Banner() {
         ))}
       </div>
 
-      {/* cinematic fade edges */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-pink-50 via-pink-50 to-transparent pointer-events-none"></div>
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-purple-50 via-purple-50 to-transparent pointer-events-none"></div>
     </div>
