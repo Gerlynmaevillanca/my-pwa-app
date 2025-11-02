@@ -21,32 +21,32 @@ function Favorites() {
     <div className="min-h-screen bg-linear-to-br from-rose-50 via-pink-50 to-purple-50 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 text-pink-200 opacity-30 text-9xl">
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 text-pink-200 opacity-30 text-5xl sm:text-7xl md:text-9xl">
           ✦
         </div>
-        <div className="absolute top-40 right-20 text-purple-200 opacity-20 text-7xl">
+        <div className="absolute top-20 sm:top-40 right-10 sm:right-20 text-purple-200 opacity-20 text-4xl sm:text-5xl md:text-7xl">
           ♡
         </div>
-        <div className="absolute bottom-32 left-1/4 text-rose-200 opacity-25 text-6xl">
+        <div className="absolute bottom-20 sm:bottom-32 left-1/4 text-rose-200 opacity-25 text-3xl sm:text-4xl md:text-6xl">
           ✧
         </div>
       </div>
 
-      <div className="relative z-10 p-6 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold bg-linear-to-r from-pink-500 via-purple-500 to-rose-500 bg-clip-text text-transparent mb-8 text-center">
+      <div className="relative z-10 p-3 sm:p-4 md:p-6 max-w-7xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-r from-pink-500 via-purple-500 to-rose-500 bg-clip-text text-transparent mb-4 sm:mb-6 md:mb-8 text-center">
           Your Favorites ❤️
         </h2>
 
         {favorites.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="inline-block px-8 py-4 bg-white/60 backdrop-blur-sm rounded-full border border-pink-200 shadow-sm">
-              <p className="text-gray-500 font-medium">
+          <div className="text-center py-8 sm:py-12 md:py-16 px-4">
+            <div className="inline-block px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-white/60 backdrop-blur-sm rounded-full border border-pink-200 shadow-sm">
+              <p className="text-sm sm:text-base text-gray-500 font-medium">
                 ✧ No favorites yet. Start adding some movies! ✧
               </p>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {favorites.map((movie) => (
               <div
                 key={movie.imdbID}
@@ -58,19 +58,19 @@ function Favorites() {
                     e.stopPropagation();
                     handleUnfavorite(movie.imdbID);
                   }}
-                  className="absolute top-4 right-4 z-20 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                  className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 z-20 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shadow-lg transition-all active:scale-95 sm:hover:scale-110"
                   title="Remove from favorites"
                 >
-                  <X size={16} />
+                  <X size={14} className="sm:w-4 sm:h-4" />
                 </button>
 
                 {/* Hover background glow */}
-                <div className="absolute inset-0 bg-linear-to-br from-pink-200 to-purple-200 rounded-3xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-pink-200 to-purple-200 rounded-2xl sm:rounded-3xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity"></div>
 
                 {/* Card container */}
                 <div
                   onClick={() => navigate(`/movie/${movie.imdbID}`)}
-                  className="relative bg-white/70 backdrop-blur-xl rounded-3xl overflow-hidden border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:border-pink-300 transition-all hover:-translate-y-2 flex flex-col justify-between h-112"
+                  className="relative bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:border-pink-300 transition-all active:scale-95 sm:hover:-translate-y-2 flex flex-col justify-between h-auto sm:h-112"
                 >
                   {/* Poster Section */}
                   <div className="relative overflow-hidden">
@@ -81,24 +81,24 @@ function Favorites() {
                           : "https://via.placeholder.com/300x450/FFC0CB/FFFFFF?text=No+Image"
                       }
                       alt={movie.Title}
-                      className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-64 sm:h-72 md:h-80 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </div>
 
                   {/* Details Section */}
-                  <div className="p-4 flex flex-col justify-between grow">
+                  <div className="p-3 sm:p-4 flex flex-col justify-between grow">
                     <div>
-                      <h2 className="font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-pink-500 transition-colors leading-tight">
+                      <h2 className="font-bold text-sm sm:text-base md:text-lg text-gray-800 mb-1 sm:mb-2 line-clamp-2 group-hover:text-pink-500 transition-colors leading-tight">
                         {movie.Title}
                       </h2>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <Calendar size={14} className="text-purple-400" />
+                      <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-500">
+                        <Calendar size={12} className="text-purple-400 sm:w-3.5 sm:h-3.5" />
                         <span>{movie.Year}</span>
                       </div>
                     </div>
 
-                    <div className="mt-3 flex items-center gap-1 text-xs text-pink-500 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="mt-2 sm:mt-3 flex items-center gap-1 text-xs text-pink-500 font-semibold opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                       <span>View Details</span>
                       <span className="group-hover:translate-x-1 transition-transform">
                         →
